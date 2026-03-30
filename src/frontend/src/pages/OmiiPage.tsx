@@ -178,7 +178,7 @@ function FoodGame() {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <div className="w-full max-w-md bg-white/10 rounded-full h-4 overflow-hidden border border-pink-300/40">
+      <div className="w-full max-w-md bg-white/10 rounded-full h-4 overflow-hidden border border-pink-400/30">
         <div
           className="h-full rounded-full transition-all duration-300"
           style={{
@@ -187,7 +187,7 @@ function FoodGame() {
           }}
         />
       </div>
-      <div className="flex gap-6 text-sm font-semibold text-pink-700">
+      <div className="flex gap-6 text-sm font-semibold text-pink-300">
         <span>🍽️ Caught: {score}</span>
         <span>💨 Missed: {missed}</span>
       </div>
@@ -209,12 +209,12 @@ function FoodGame() {
           ref={containerRef}
           onMouseMove={handleMouseMove}
           onTouchMove={handleTouchMove}
-          className="relative rounded-2xl overflow-hidden border-2 border-pink-300/50 cursor-none select-none"
+          className="relative rounded-2xl overflow-hidden border-2 border-pink-400/30 cursor-none select-none"
           style={{
             width: GAME_W,
             height: GAME_H,
             background:
-              "linear-gradient(180deg, rgba(249,168,212,0.2), rgba(192,132,252,0.2))",
+              "linear-gradient(180deg, rgba(249,168,212,0.1), rgba(192,132,252,0.1))",
             maxWidth: "100%",
           }}
         >
@@ -235,7 +235,7 @@ function FoodGame() {
               left: basketX,
               width: BASKET_W,
               height: BASKET_H,
-              background: "rgba(249,168,212,0.7)",
+              background: "rgba(249,168,212,0.3)",
             }}
           >
             🧵
@@ -246,20 +246,20 @@ function FoodGame() {
       {showWin && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center"
-          style={{ background: "rgba(0,0,0,0.5)" }}
+          style={{ background: "rgba(0,0,0,0.7)" }}
         >
           <div
-            className="glass rounded-3xl p-8 text-center max-w-sm mx-4 animate-modal-in"
+            className="glass-dark rounded-3xl p-8 text-center max-w-sm mx-4 animate-modal-in"
             style={{
               background:
                 "linear-gradient(135deg, rgba(249,168,212,0.9), rgba(192,132,252,0.9))",
             }}
           >
             <div className="text-6xl mb-4">😴🐕</div>
-            <h3 className="text-2xl font-bold text-pink-800 mb-3">
+            <h3 className="text-2xl font-bold text-pink-900 mb-3">
               Bht khaa liya!
             </h3>
-            <p className="text-pink-700 font-medium mb-6">
+            <p className="text-pink-800 font-medium mb-6">
               Jaake sojao Casper k saath 😴💕
             </p>
             <button
@@ -369,7 +369,7 @@ export default function OmiiPage() {
       className="relative min-h-screen overflow-x-hidden"
       style={{
         background:
-          "linear-gradient(160deg, #fce7f3, #e9d5ff, #f5d0fe, #fce7f3)",
+          "linear-gradient(160deg, #0f0a2e, #1e1040, #0a1528, #0f0a2e)",
         backgroundSize: "400% 400%",
         animation: "gradientShift 12s ease infinite",
       }}
@@ -384,7 +384,7 @@ export default function OmiiPage() {
         type="button"
         data-ocid="omii.link"
         onClick={() => navigate({ to: "/" })}
-        className="fixed top-4 left-4 z-40 glass px-4 py-2 rounded-full text-sm font-semibold text-pink-700 hover:scale-105 transition-transform"
+        className="fixed top-4 left-4 z-40 glass-dark px-4 py-2 rounded-full text-sm font-semibold text-pink-300 hover:scale-105 transition-transform"
       >
         ← Home
       </button>
@@ -409,20 +409,20 @@ export default function OmiiPage() {
             alt="Omii"
             size="lg"
             gradient="from-pink-300 via-rose-300 to-purple-300"
-            glow="0 0 60px 20px rgba(236,72,153,0.35), 0 0 120px 40px rgba(192,132,252,0.2)"
+            glow="0 0 60px 20px rgba(236,72,153,0.5), 0 0 120px 40px rgba(192,132,252,0.3)"
           />
           <h1
             className="text-5xl md:text-7xl font-extrabold mt-6 mb-3"
             style={{
-              background: "linear-gradient(135deg, #be185d, #7c3aed)",
+              background: "linear-gradient(135deg, #f472b6, #a78bfa)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              filter: "drop-shadow(0 0 15px rgba(236,72,153,0.4))",
+              filter: "drop-shadow(0 0 20px rgba(244,114,182,0.6))",
             }}
           >
             Omii 🌸
           </h1>
-          <p className="text-lg md:text-xl font-semibold text-pink-600/80 max-w-md">
+          <p className="text-lg md:text-xl font-semibold text-pink-300/80 max-w-md">
             Yapper Supreme & Professional Chaos Agent 💕
           </p>
         </div>
@@ -431,17 +431,20 @@ export default function OmiiPage() {
       {/* ── ABOUT YOU ── */}
       <section className="max-w-4xl mx-auto px-4 pb-16">
         <ScrollFadeIn>
-          <h2 className="text-3xl font-bold text-center text-pink-700 mb-8">
+          <h2 className="text-3xl font-bold text-center text-pink-300 mb-8">
             About You 💕
           </h2>
         </ScrollFadeIn>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {aboutCards.map((card, i) => (
             <ScrollFadeIn key={card.title} delay={i * 80}>
-              <GlassCard className="p-5 shimmer-card hover:scale-105 transition-transform">
+              <GlassCard
+                dark
+                className="p-5 shimmer-card hover:scale-105 transition-transform"
+              >
                 <div className="text-3xl mb-2">{card.emoji}</div>
-                <h3 className="font-bold text-pink-700 mb-1">{card.title}</h3>
-                <p className="text-sm text-pink-600/70">{card.desc}</p>
+                <h3 className="font-bold text-pink-300 mb-1">{card.title}</h3>
+                <p className="text-sm text-pink-200/70">{card.desc}</p>
               </GlassCard>
             </ScrollFadeIn>
           ))}
@@ -451,17 +454,20 @@ export default function OmiiPage() {
       {/* ── OUR MOMENTS ── */}
       <section className="max-w-4xl mx-auto px-4 pb-16">
         <ScrollFadeIn>
-          <h2 className="text-3xl font-bold text-center text-purple-700 mb-8">
+          <h2 className="text-3xl font-bold text-center text-purple-300 mb-8">
             Our Moments 🌈
           </h2>
         </ScrollFadeIn>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {moments.map((m, i) => (
             <ScrollFadeIn key={m.title} delay={i * 80}>
-              <GlassCard className="p-5 shimmer-card hover:scale-105 transition-transform">
+              <GlassCard
+                dark
+                className="p-5 shimmer-card hover:scale-105 transition-transform"
+              >
                 <div className="text-3xl mb-2">{m.emoji}</div>
-                <h3 className="font-bold text-purple-700 mb-1">{m.title}</h3>
-                <p className="text-sm text-purple-600/70">{m.desc}</p>
+                <h3 className="font-bold text-purple-300 mb-1">{m.title}</h3>
+                <p className="text-sm text-purple-200/70">{m.desc}</p>
               </GlassCard>
             </ScrollFadeIn>
           ))}
@@ -471,15 +477,15 @@ export default function OmiiPage() {
       {/* ── LIKES & FUN THINGS ── */}
       <section className="max-w-4xl mx-auto px-4 pb-16">
         <ScrollFadeIn>
-          <h2 className="text-3xl font-bold text-center text-pink-700 mb-8">
+          <h2 className="text-3xl font-bold text-center text-pink-300 mb-8">
             Likes & Fun Things 🐾
           </h2>
         </ScrollFadeIn>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
           <ScrollFadeIn>
-            <GlassCard className="p-6 shimmer-card">
+            <GlassCard dark className="p-6 shimmer-card">
               <div className="text-5xl mb-3">🐕</div>
-              <h3 className="font-bold text-xl text-pink-700 mb-1">Casper</h3>
+              <h3 className="font-bold text-xl text-pink-300 mb-1">Casper</h3>
               <span
                 className="inline-block px-3 py-1 rounded-full text-xs font-bold text-white mb-3"
                 style={{
@@ -488,19 +494,19 @@ export default function OmiiPage() {
               >
                 Void's soulEnemy 😐
               </span>
-              <p className="text-sm text-pink-600/70">
+              <p className="text-sm text-pink-200/70">
                 This menace of a dog named Casper. She loves him, I... tolerate
                 him.
               </p>
             </GlassCard>
           </ScrollFadeIn>
           <ScrollFadeIn delay={100}>
-            <GlassCard className="p-6 shimmer-card">
+            <GlassCard dark className="p-6 shimmer-card">
               <div className="text-5xl mb-3">📦</div>
-              <h3 className="font-bold text-xl text-pink-700 mb-1">
+              <h3 className="font-bold text-xl text-pink-300 mb-1">
                 Irritating & Ordering Things
               </h3>
-              <p className="text-sm text-pink-600/70">
+              <p className="text-sm text-pink-200/70">
                 Her Amazon cart is a cry for help. Always ordering, always
                 irritating, never stopping.
               </p>
@@ -512,15 +518,15 @@ export default function OmiiPage() {
       {/* ── FOOD GAME ── */}
       <section className="max-w-4xl mx-auto px-4 pb-20">
         <ScrollFadeIn>
-          <h2 className="text-3xl font-bold text-center text-pink-700 mb-3">
+          <h2 className="text-3xl font-bold text-center text-pink-300 mb-3">
             Food Catching Game 🍕
           </h2>
-          <p className="text-center text-pink-600/70 text-sm mb-8">
+          <p className="text-center text-pink-200/70 text-sm mb-8">
             Catch {TOTAL_FOOD} foods to win... or face the consequences 😏
           </p>
         </ScrollFadeIn>
         <ScrollFadeIn delay={100}>
-          <GlassCard className="p-6">
+          <GlassCard dark className="p-6">
             <FoodGame />
           </GlassCard>
         </ScrollFadeIn>
@@ -528,16 +534,16 @@ export default function OmiiPage() {
 
       {/* Footer */}
       <footer className="text-center pb-8 px-4">
-        <p className="text-pink-600/80 font-semibold mb-1">
+        <p className="text-pink-200/80 font-semibold mb-1">
           Made with love by Voiddd & Caffeine AI 💕
         </p>
-        <p className="text-xs text-pink-400/60">
+        <p className="text-xs text-pink-300/50">
           © {new Date().getFullYear()}. Built with 💗 using{" "}
           <a
             href={`https://caffeine.ai?utm_source=caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="underline hover:text-pink-600"
+            className="underline hover:text-pink-300"
           >
             caffeine.ai
           </a>
