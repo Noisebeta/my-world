@@ -56,7 +56,10 @@ function ConfettiRain({ count = 25 }: { count?: number }) {
 // ── Secret Section ──
 type SecretState = "locked" | "inputting" | "denied" | "unlocked";
 
-function SecretSection() {
+function SecretSection({
+  onModalOpen,
+  onModalClose,
+}: { onModalOpen: () => void; onModalClose: () => void }) {
   const [state, setState] = useState<SecretState>("locked");
   const [input, setInput] = useState("");
   const [showValentineMsg, setShowValentineMsg] = useState(false);
@@ -69,6 +72,7 @@ function SecretSection() {
   const handleUnlock = () => {
     if (input.trim().toLowerCase() === "biwi") {
       setState("unlocked");
+      onModalOpen();
     } else {
       setState("denied");
       setTimeout(() => setState("inputting"), 1000);
@@ -76,12 +80,15 @@ function SecretSection() {
     setInput("");
   };
 
+  const handleClose = () => {
+    setState("locked");
+    onModalClose();
+  };
+
   const handleNoClick = () => {
     const newCount = noCount + 1;
     setNoCount(newCount);
-    if (newCount > 5) {
-      setNoText("This button doesn't work anymore 😂");
-    }
+    if (newCount > 5) setNoText("This button doesn't work anymore 😂");
   };
 
   const handleNoHover = useCallback(() => {
@@ -171,14 +178,14 @@ function SecretSection() {
         </GlassCard>
       )}
 
-      {/* Unlocked modal */}
+      {/* Unlocked modal — z-[60] so it's above everything */}
       {state === "unlocked" && (
         <div
           data-ocid="secret.modal"
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 z-[60] flex items-center justify-center p-4"
           style={{
-            background: "rgba(0,0,0,0.75)",
-            backdropFilter: "blur(8px)",
+            background: "rgba(0,0,0,0.85)",
+            backdropFilter: "blur(10px)",
           }}
         >
           <div
@@ -191,14 +198,14 @@ function SecretSection() {
             <button
               type="button"
               data-ocid="secret.close_button"
-              onClick={() => setState("locked")}
+              onClick={handleClose}
               className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 text-white font-bold flex items-center justify-center transition-colors"
             >
               ✕
             </button>
 
             <PlaceholderImage
-              src="/romiii/cover.jpg"
+              src="/romiii/cover2.jpg"
               alt="Romii"
               size="lg"
               gradient="from-rose-300 via-pink-300 to-purple-300"
@@ -214,7 +221,6 @@ function SecretSection() {
               like you. You're special.
             </p>
 
-            {/* Valentine button */}
             <button
               type="button"
               data-ocid="secret.primary_button"
@@ -236,7 +242,6 @@ function SecretSection() {
               </div>
             )}
 
-            {/* No button */}
             <div className="relative h-16 mt-2">
               <button
                 type="button"
@@ -267,14 +272,12 @@ export default function RomiiPage() {
   const navigate = useNavigate();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [musicPlaying, setMusicPlaying] = useState(false);
+  const [secretModalOpen, setSecretModalOpen] = useState(false);
 
   const toggleMusic = () => {
     if (!audioRef.current) return;
-    if (musicPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play().catch(() => {});
-    }
+    if (musicPlaying) audioRef.current.pause();
+    else audioRef.current.play().catch(() => {});
     setMusicPlaying(!musicPlaying);
   };
 
@@ -380,7 +383,6 @@ export default function RomiiPage() {
     },
   ];
 
-  // decorative floating icons for hero
   const heroDecorators = useMemo(
     () => [
       { emoji: "🌻", style: { top: "10%", left: "5%", animationDelay: "0s" } },
@@ -402,7 +404,6 @@ export default function RomiiPage() {
     [],
   );
 
-  // stars/hearts for moments section
   const bgStars = useMemo(
     () => [
       ...Array.from({ length: 12 }, (_, i) => ({
@@ -430,22 +431,26 @@ export default function RomiiPage() {
         <track kind="captions" />
       </audio>
 
-      {/* Back button */}
+      {/* Back button — hidden when secret modal is open */}
       <button
         type="button"
         data-ocid="romii.link"
         onClick={() => navigate({ to: "/" })}
-        className="fixed top-4 left-4 z-40 glass-dark px-4 py-2 rounded-full text-sm font-semibold text-rose-300 hover:scale-105 transition-transform"
+        className={`fixed top-4 left-4 glass-dark px-4 py-2 rounded-full text-sm font-semibold text-rose-300 hover:scale-105 transition-transform ${
+          secretModalOpen ? "z-[1] pointer-events-none opacity-0" : "z-40"
+        }`}
       >
         ← Home
       </button>
 
-      {/* Music toggle */}
+      {/* Music toggle — hidden when secret modal is open */}
       <button
         type="button"
         data-ocid="romii.toggle"
         onClick={toggleMusic}
-        className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full text-2xl flex items-center justify-center shadow-lg animate-music-pulse"
+        className={`fixed bottom-6 right-6 w-14 h-14 rounded-full text-2xl flex items-center justify-center shadow-lg animate-music-pulse transition-opacity ${
+          secretModalOpen ? "z-[1] pointer-events-none opacity-0" : "z-40"
+        }`}
         style={{ background: "linear-gradient(135deg, #be185d, #7c3aed)" }}
       >
         {musicPlaying ? "⏸" : "🎵"}
@@ -454,8 +459,6 @@ export default function RomiiPage() {
       {/* ── HERO ── */}
       <section className="relative flex flex-col items-center justify-center pt-24 pb-16 px-4 text-center overflow-hidden">
         <ConfettiRain count={20} />
-
-        {/* Floating decorators */}
         {heroDecorators.map((d) => (
           <div
             key={d.emoji}
@@ -470,7 +473,6 @@ export default function RomiiPage() {
             {d.emoji}
           </div>
         ))}
-
         <div className="relative z-10 flex flex-col items-center">
           <PlaceholderImage
             src="/romiii/cover.jpg"
@@ -504,7 +506,6 @@ export default function RomiiPage() {
           </h2>
         </ScrollFadeIn>
         <div className="relative">
-          {/* Timeline line */}
           <div
             className="absolute left-6 top-0 bottom-0 w-0.5"
             style={{ background: "linear-gradient(180deg, #fb7185, #a78bfa)" }}
@@ -513,7 +514,6 @@ export default function RomiiPage() {
             {storyEvents.map((ev, i) => (
               <ScrollFadeIn key={ev.title} delay={i * 120}>
                 <GlassCard dark className="p-5 shimmer-card">
-                  {/* Dot on timeline */}
                   <div
                     className="absolute -left-10 w-5 h-5 rounded-full border-2 border-rose-400"
                     style={{
@@ -574,15 +574,12 @@ export default function RomiiPage() {
             Legendary skills. Unlockable by default.
           </p>
         </ScrollFadeIn>
-
-        {/* Gift box */}
         <div
           className="absolute -top-4 right-4 text-4xl animate-gift-bounce pointer-events-none select-none"
           aria-hidden="true"
         >
           🎁
         </div>
-
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {abilities.map((ab, i) => (
             <ScrollFadeIn key={ab.title} delay={i * 100}>
@@ -612,7 +609,6 @@ export default function RomiiPage() {
 
       {/* ── OUR MOMENTS ── */}
       <section className="max-w-4xl mx-auto px-4 pb-16 relative overflow-hidden">
-        {/* Background stars/hearts */}
         {bgStars.map((s) => (
           <div
             key={s.id}
@@ -629,7 +625,6 @@ export default function RomiiPage() {
             {s.emoji}
           </div>
         ))}
-
         <ScrollFadeIn>
           <h2 className="text-3xl font-bold text-center text-rose-300 mb-8 relative z-10">
             Our Moments 🌙
@@ -659,7 +654,10 @@ export default function RomiiPage() {
           </h2>
         </ScrollFadeIn>
         <ScrollFadeIn delay={100}>
-          <SecretSection />
+          <SecretSection
+            onModalOpen={() => setSecretModalOpen(true)}
+            onModalClose={() => setSecretModalOpen(false)}
+          />
         </ScrollFadeIn>
       </section>
 

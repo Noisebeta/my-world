@@ -241,7 +241,7 @@ export default function LandingPage() {
             }}
           >
             <CardPhoto
-              src="/omiii/cover.jpg"
+              src="/omiii/cover3.jpg"
               fallbackEmoji="🌸"
               alt="Omii"
               ringColor="#f472b6"
@@ -276,7 +276,7 @@ export default function LandingPage() {
             }}
           >
             <CardPhoto
-              src="/romiii/cover.jpg"
+              src="/romiii/cover3.jpg"
               fallbackEmoji="🌹"
               alt="Romii"
               ringColor="#fb7185"

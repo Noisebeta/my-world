@@ -238,7 +238,7 @@ function FoodGame() {
               background: "rgba(249,168,212,0.7)",
             }}
           >
-            🧺
+            🧵
           </div>
         </div>
       )}
@@ -486,7 +486,7 @@ export default function OmiiPage() {
                   background: "linear-gradient(135deg, #f472b6, #c084fc)",
                 }}
               >
-                Void's soulEnemy 😤
+                Void's soulEnemy 😐
               </span>
               <p className="text-sm text-pink-600/70">
                 This menace of a dog named Casper. She loves him, I... tolerate
