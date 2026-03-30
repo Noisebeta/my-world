@@ -198,6 +198,8 @@ function SecretSection() {
             </button>
 
             <PlaceholderImage
+              src="/romiii/cover.jpg"
+              alt="Romii"
               size="lg"
               gradient="from-rose-300 via-pink-300 to-purple-300"
               glow="0 0 60px 20px rgba(251,113,133,0.5)"
@@ -471,6 +473,8 @@ export default function RomiiPage() {
 
         <div className="relative z-10 flex flex-col items-center">
           <PlaceholderImage
+            src="/romiii/cover.jpg"
+            alt="Romii"
             size="lg"
             gradient="from-rose-400 via-pink-400 to-purple-500"
             glow="0 0 60px 20px rgba(251,113,133,0.4), 0 0 120px 40px rgba(124,58,237,0.3)"

@@ -1,6 +1,6 @@
 import { useNavigate } from "@tanstack/react-router";
 import type React from "react";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import BackgroundParticles from "../components/BackgroundParticles";
 import FloatingHearts from "../components/FloatingHearts";
 
@@ -76,6 +76,40 @@ function Balloon({
       aria-hidden="true"
     >
       {emoji}
+    </div>
+  );
+}
+
+function CardPhoto({
+  src,
+  fallbackEmoji,
+  alt,
+  ringColor,
+}: {
+  src: string;
+  fallbackEmoji: string;
+  alt: string;
+  ringColor: string;
+}) {
+  const [errored, setErrored] = useState(false);
+  if (!errored) {
+    return (
+      <div
+        className="w-24 h-24 rounded-full overflow-hidden mx-auto mb-4 ring-4"
+        style={{ "--tw-ring-color": ringColor } as React.CSSProperties}
+      >
+        <img
+          src={src}
+          alt={alt}
+          onError={() => setErrored(true)}
+          className="w-full h-full object-cover"
+        />
+      </div>
+    );
+  }
+  return (
+    <div className="text-6xl mb-4 group-hover:animate-heartbeat">
+      {fallbackEmoji}
     </div>
   );
 }
@@ -206,9 +240,12 @@ export default function LandingPage() {
                 "0 0 0 0 rgba(236,72,153,0.3)";
             }}
           >
-            <div className="text-6xl mb-4 group-hover:animate-heartbeat">
-              🌸
-            </div>
+            <CardPhoto
+              src="/omiii/cover.jpg"
+              fallbackEmoji="🌸"
+              alt="Omii"
+              ringColor="#f472b6"
+            />
             <h2 className="text-3xl font-bold text-pink-700 mb-2">Omii</h2>
             <p className="text-sm font-medium text-pink-600/80">
               Cute • Chaotic • Playful 💕
@@ -238,9 +275,12 @@ export default function LandingPage() {
                 "0 0 0 0 rgba(251,113,133,0.3)";
             }}
           >
-            <div className="text-6xl mb-4 group-hover:animate-heartbeat">
-              🌹
-            </div>
+            <CardPhoto
+              src="/romiii/cover.jpg"
+              fallbackEmoji="🌹"
+              alt="Romii"
+              ringColor="#fb7185"
+            />
             <h2 className="text-3xl font-bold text-rose-700 mb-2">Romii</h2>
             <p className="text-sm font-medium text-rose-600/80">
               Romantic • Emotional • Stunning 🌹

@@ -1,7 +1,9 @@
 import { cn } from "@/lib/utils";
-import React from "react";
+import React, { useState } from "react";
 
 interface PlaceholderImageProps {
+  src?: string;
+  alt?: string;
   gradient?: string;
   className?: string;
   size?: "sm" | "md" | "lg";
@@ -9,20 +11,44 @@ interface PlaceholderImageProps {
 }
 
 /**
- * PlaceholderImage — a styled gradient div with a person icon centered,
- * acting as a beautiful image placeholder with optional glow.
+ * PlaceholderImage — shows a real image if `src` is provided,
+ * otherwise falls back to a styled gradient placeholder.
  */
 export default function PlaceholderImage({
+  src,
+  alt = "Photo",
   gradient = "from-pink-300 via-purple-300 to-indigo-300",
   className,
   size = "md",
   glow,
 }: PlaceholderImageProps) {
+  const [imgError, setImgError] = useState(false);
+
   const sizeClasses = {
     sm: "w-32 h-32",
     md: "w-48 h-48 md:w-56 md:h-56",
     lg: "w-64 h-64 md:w-80 md:h-80",
   };
+
+  if (src && !imgError) {
+    return (
+      <div
+        className={cn(
+          "relative rounded-full overflow-hidden flex-shrink-0",
+          sizeClasses[size],
+          className,
+        )}
+        style={glow ? { boxShadow: glow } : undefined}
+      >
+        <img
+          src={src}
+          alt={alt}
+          onError={() => setImgError(true)}
+          className="w-full h-full object-cover"
+        />
+      </div>
+    );
+  }
 
   return (
     <div
@@ -34,9 +60,7 @@ export default function PlaceholderImage({
       )}
       style={glow ? { boxShadow: glow } : undefined}
     >
-      {/* Soft inner overlay */}
       <div className="absolute inset-0 bg-white/10 rounded-full" />
-      {/* Person icon */}
       <svg
         viewBox="0 0 24 24"
         className="w-1/2 h-1/2 text-white/60 relative z-10"

@@ -405,6 +405,8 @@ export default function OmiiPage() {
         <ConfettiRain count={20} />
         <div className="relative z-10 flex flex-col items-center">
           <PlaceholderImage
+            src="/omiii/cover.jpg"
+            alt="Omii"
             size="lg"
             gradient="from-pink-300 via-rose-300 to-purple-300"
             glow="0 0 60px 20px rgba(236,72,153,0.35), 0 0 120px 40px rgba(192,132,252,0.2)"
